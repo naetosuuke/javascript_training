@@ -19,6 +19,22 @@
 <div class="container">
 <section>
 
+    <table border="1">
+        <tr>
+            <td id="title"></td>
+            <td id="price"></td>
+            <td id="stock"></td>
+        </tr>
+    </table>
+
+    <!-- <h1>やることリスト</h1>
+    <ul id="list">
+    </ul> -->
+
+    <!-- <p id='output'></p>
+    <p id='output2'></p>
+    <p id='output3'></p>
+     -->
 </section>
 </div><!-- /.container -->
 </main>
@@ -27,5 +43,128 @@
 <p>JavaScript Samples</p>
 </div><!-- /.container -->
 </footer>
+<script>
+    'use strict';
+
+    let jsbook = {title: 'Javascript入門', price: ' 2500', stock: 3};
+
+    document.getElementById('title').textContent = jsbook.title;
+    document.getElementById('price').textContent = jsbook.price;
+    document.getElementById('stock').textContent = jsbook.stock;
+
+
+
+    // for (let p in jsbook) {
+    //     console.log(p + ' : ' + jsbook[p]);
+    // }
+
+    // console.log(jsbook);
+    // console.log(jsbook.title); // ドット記法
+    // console.log(jsbook['price']); // ブラケット記法
+    // jsbook.stock = 10;
+    // jsbook['stock'] = 10;
+    // console.log(jsbook.stock);
+
+
+    // let todo = ['デザインカンプ作成', 'データ整理', '勉強会申込', '牛乳買う']
+    // todo.push('歯医者に行く');
+    // for(let item of todo) {
+    //     const li = `<li>${item}</li>`;
+    //     // list要素の子要素として先頭に追加
+    //     document.getElementById('list').insertAdjacentHTML('beforeend', li);
+    // }        
+    
+    
+    // function fizzbuzz(num) {
+    //     if(num % 3 === 0 && num % 5 === 0) {
+    //         return 'fizzbuzz';
+    //     } else if(num % 3 === 0) {
+    //         return 'fizz';
+    //     } else if (num % 5 === 0) {
+    //         return 'buzz';
+    //     } else {
+    //         return num;;
+    //     }
+    // }
+
+    // let i = 1;
+    // while(i <= 30) {
+    //     console.log(fizzbuzz(i));
+    //     i += 1;
+    // }
+    
+
+    // function total(price) {
+    //     const tax = 0.1;
+    //     return price * (1 + tax);
+    // }
+    // console.log('コーヒーメーカーの値段は' + total(8000) + '円(税込)です。');
+    // document.getElementById('output').textContent = 'コーヒーメーカーの値段は' + total(8000) + '円(税込)です。';
+    // document.getElementById('output2').textContent = 'コーヒーフィルターの値段は' + total(200) + '円(税込)です。';
+    // document.getElementById('output3').textContent = 'コーヒー豆の値段は' + total(1000) + '円(税込)です。';
+
+
+
+    // let enemyLife = 100;
+    // window.alert('戦闘スタート');
+    // while(enemyLife > 0) {
+    //     const attack = Math.floor(Math.random() * 30) + 1; // attackはループ毎に破棄
+    //     console.log('モンスターに' + attack + 'のダメージ！');
+    //     enemyLife -= attack;
+    // }
+
+    // console.log('敵を倒した！');
+
+
+    // let i = 1;
+    // while(i <= 10) {
+    //     console.log(i + '枚');
+    //     i += 1;
+    // }
+
+    // const hour = new Date().getHours();;
+    // if(hour >= 19 && hour < 21) {
+    //     window.alert('お弁当30%OFF!');
+    // } else if(hour === 9 || hour === 15) {
+    //     window.alert('お弁当1個買うと1個おまけ!');
+    // } else {
+    //     window.alert('お弁当はいかがですか?');
+    // }
+
+
+    // const number = Math.floor(Math.random() *  6); // 0~5のランダムな整数を生成
+    // const answer = parseInt(window.prompt('数当てゲーム。0~5までの数字を入力してね'));
+    // let message;
+    // if(answer === number) {
+    //     message = 'あたり！';
+    // } else if(answer < number) {
+    //     message = '残念！もっと大きいよ';
+    // } else if(answer > number) {
+    //     message = '残念！もっと小さいよ';
+    // } else {
+    //     message = '0~5の数字を入力してね';
+    // }
+
+    // window.alert(message);
+     
+
+
+    // let answer = window.prompt('ヘルプを見ますか？');
+    // if (answer === 'yes') {
+    //     window.alert('タップでジャンプ、障害物を避けます。')
+    // } else if(answer === 'no') {
+    //     window.alert('ゲーム起動中...')
+    // } else {
+    //     window.alert('yesかnoで答えてください。')
+    // }
+
+    
+    // if(window.confirm('ゲームスタート！準備はいい？')) {
+    //     console.log('ゲームを開始します。')
+    // } else {
+    //     console.log('ゲームを終了します。')
+    // }
+    
+</script>
 </body>
 </html>
