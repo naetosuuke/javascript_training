@@ -1,8 +1,7 @@
-# javascript_training2024004
+# javascript_training
 
 Training of fundamental javascript coding.
-
-** This source is not for the distribution. All rights reserved "確かな力が身につくJavaScript「超」入門 第2版 - 狩野 祐東".
+** This source is not for the distribution. All rights reserved each author of reference books.
 
 *  [ 自分用メモ ]
 * 確かな力が身につくjavascript超入門
