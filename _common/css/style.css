@@ -95,6 +95,15 @@ footer .container {
     font-size: 12px;
     text-align: right;
 }
+
+#day, /*カウントダウン用CSS*/
+#hour, 
+#min, 
+#sec {
+    font-size: 50px;
+    font-weight: bold;
+}
+
 @media (min-width: 768px) {
     footer .container {
         min-height: 50px;
