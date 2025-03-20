@@ -1,0 +1,842 @@
+# javascript 基礎文法
+
+
+### — javascriptでできること
+
+- コンソールへの出力
+例: console.log(’hello world!’);
+
+- ダイアログボックスへの出力
+例: window.alert(’hello, world!’);
+
+- HTML/CSSの読み書き　（**メイン**）
+⇨ ボタン押下、非同期通信などイベント発生に合わせて書き換え
+
+例:
+<p id=”choice”>ここに日時が表示される</p>
+<script>
+ document.getElementById(’choice’).textContent = new Date() ;
+</script>
+
+💡 **javascriptの構成**
+オブジェクト.メソッド(プロパティ)
+例: console.log(’hello world!’);
+⇨consoleオブジェクトのlogメソッドを呼び出し、その際(’hello world!’)プロパティを渡している
+
+オブジェクトは基本 ブラウザのコンポーネントを指している。
+
+
+## windowオブジェクトのメソッド例
+window.alert()　アラートダイアログの表示
+window.confirm()  確認ダイアログの表示 true or falseを返す
+window.prompt() プロンプトダイアログ　入力された値を返す
+
+## javascript基本文法
+
+// 変数の宣言
+旧記法 
+var 変数名
+var 変数名 = 値
+...値を持つ変数の再宣言が可能(javascriptでは非推奨)
+   スコープは関数内 広い
+
+新規法()
+let 変数名
+let 変数名 = 値
+...値を持つ変数の再宣言が不可能
+   スコープはブロック{}内　狭い
+
+// 定数
+const 定数名
+const 定数名 = 値
+...定数なので値の上書きが不可能
+   スコープはブロック{}内　狭い
+
+※_ $を変数/定数名に使用できる
+
+// テンプレート文字列
+`文字列${変数名}文字列` 　 // 文字列の中に変数を埋め込み、結合させられる
+`文字列${メソッド}文字列`　// メソッドの戻り値も埋め込み可能
+`祇園精舎の鐘の声諸行無  
+常の響きあり`            // 文字列の折り返しも可能
+`文字列${3+3}文字列`     // 演算も埋め込み可能
+
+// 配列
+let 変数名 = [] // 空配列の宣言
+let 変数名 = [値0, 値1, 値2 ... ] // 値つき配列の宣言
+
+配列名[index]    // 配列要素の読み取り
+配列名.push(値)  // 最後に値追加 
+
+・配列の追加、削除メソッド例
+配列名.pop()     // 最後の値削除
+配列名.shift()   // 最初の値削除
+配列名.unshift(値1, 値2) // 最初に値1,値2を追加する
+
+// オブジェクト
+let オブジェクト名 = {プロパティ名1: データ1, プロパティ名2: データ2 ... } // 宣言
+
+オブジェクト名.プロパティ名 // 呼出
+オブジェクト名['プロパティ名'] // 呼出2
+
+オブジェクト名.プロパティ名 = 新しいデータ // 更新1
+オブジェクト名['プロパティ名'] = 新しいデータ // 更新2
+ 
+ for (let p in オブジェクト名) { // パースするならこんな感じ
+     console.log(p + ' : ' + オブジェクト名[p]);
+ }
+
+// オブジェクト初期化
+変数 = new オブジェクト()　　　　例: const now = new Date()
+変数2 = new オブジェクト()
+→変数、変数2はそれぞれ別のインスタンス
+
+※Mathオブジェクト等 複数のインスタンスを持てないオブジェクトは初期化不要
+ window, document等は画面がインスタンスなので初期化不要
+ 
+ 
+// 算術演算子
++ 足す
+- 引く
+* かける
+/ わる
+% わった余り
+** 乗数
+
+// 比較演算子 
+===  左辺イコール右辺(型合致)
+!==  左辺notイコール右辺(or 型不一致)
+==   左辺イコール右辺(型関係なしねゔぇr)
+<    左辺より右辺が大きい 
+<=   左辺が右辺以上
+>    右辺より左辺が大きい
+>=   右辺が左辺以上
+
+&&  And演算子
+||  Or演算子
+!   Not演算子
+
+// 条件式
+if() {
+} else　if () {
+} else {
+}
+
+// ループ式
+while (条件式) {}
+for(let p in オブジェクト名 {}) // オブジェクト展開はこちら 順不同
+for(let 変数名 of 配列名) {} // foreachの代用　index番通りに出力
+
+array.forEach(function(element, index, array){}); // 配列に限り、forEachメソッドを使用することも可能
+
+// 関数
+function 関数名 (引数) { // 宣言
+	return 戻り数
+}
+関数名(引数) // 呼出
+
+// thisの使い方
+関数の中でthis を使用すると、取得した要素(下記だとitem)を引用する。
+
+item.onclick = function(){
+    console.log(this.dataset.image); // 
+};
+
+
+## コードサンプル
+
+
+
+// モンスターと戦闘するゲーム
+<script>
+    'use strict';
+    let enemyLife = 100;
+    window.alert('戦闘スタート');
+    while(enemyLife > 0) {
+        const attack = Math.floor(Math.random() * 30) + 1; // attackはループ毎に破棄
+        console.log('モンスターに' + attack + 'のダメージ！');
+        enemyLife -= attack;
+    }
+
+    console.log('敵を倒した！');
+</script>
+
+-----------------------------------------------------------------------------------------------------
+// FizzBuzz
+<script>
+  'use strict';
+  function fizzbuzz(num) {
+      if(num % 3 === 0 && num % 5 === 0) {
+          return 'fizzbuzz';
+      } else if(num % 3 === 0) {
+          return 'fizz';
+      } else if (num % 5 === 0) {
+          return 'buzz';
+      } else {
+          return num;;
+      }
+  }
+  
+  let i = 1;
+  while(i <= 30) {
+      console.log(fizzbuzz(i));
+      i += 1;
+  }
+</script>
+
+-----------------------------------------------------------------------------------------------------
+// リスト要素挿入
+<script>
+    'use strict';
+    let todo = ['デザインカンプ作成', 'データ整理', '勉強会申込', '牛乳買う']
+    todo.push('歯医者に行く');
+    for(let item of todo) {
+        const li = `<li>${item}</li>`;
+        document.getElementById('list').insertAdjacentHTML('beforeend', li);
+    }    
+</script>
+-----------------------------------------------------------------------------------------------------
+// AM, PMでの時間表記 (%12 のあまりを時間として表示)
+<script>
+    'use strict';
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const date = now.getDate();
+    const hour = now.getHours();
+    const min = now.getMinutes();
+    let ampm = '';
+    if(hour < 12) {
+        ampm = 'a.m.';
+    } else {
+        ampm = 'p.m.';
+    }
+
+    const output = `${year}/${month + 1}/${date} ${hour % 12}:${min}${ampm}`;
+</script>
+    
+ -----------------------------------------------------------------------------------------------------
+	// 小数点n桁の切り捨て処理 (10**nでかけてfloor,その後10**nで割る)
+	function point(num, digit) { // 小数点'digit'桁以降を切捨てる関数
+	    const mover = 10 ** digit;
+	    return Math.floor(num * mover) / mover;
+	};
+	document.getElementById('output').textContent = point(Math.PI, 2);
+	
+	
+-----------------------------------------------------------------------------------------------------
+// カウントダウン表示 (getTime()で差分時間を計測、setTimeoutで1秒毎リロード)
+
+<h2><span>知っていましたか？</span><br> 2025年大阪万博開催まで</h2>
+<p class="timer">あと<span id="day"></span>日<span id="hour"></span>時間<span id="min"></span>分<span id="sec"></span>秒</p>
+
+<script>
+    function countdown(due) { // カウントダウン時刻の作成
+        const now = new Date();
+
+        const rest = due.getTime() - now.getTime();
+        const sec = Math.floor(rest / 1000) % 60; // 本来 余りは出ないはずだが浮動小数点の誤差を考慮して切捨て
+        const min = Math.floor(rest / 1000 / 60) % 60;
+        const hours = Math.floor(rest / 1000 / 60 / 60) % 24;
+        const days = Math.floor(rest / 1000 / 60 / 60 / 24);
+        const count = [days, hours, min, sec];
+
+        return count;
+    }
+
+    let goal = new Date(2025, 4, 3); // 2025/4/3 を意味
+
+    function recalc() { // 残り時間を再計算する関数
+        const counter = countdown(goal);  
+
+        document.getElementById('day').textContent = counter[0];
+        document.getElementById('hour').textContent = counter[1];
+        document.getElementById('min').textContent = String(counter[2]).padStart(2, '0'); //.padStart(揃える文字数, 埋める文字)
+        document.getElementById('sec').textContent = String(counter[3]).padStart(2, '0');
+
+        reflesh();
+    }
+
+    function reflesh() { // 1秒ごとにrecalcを呼び出す関数
+        setTimeout(recalc, 1000);
+    }
+
+    recalc();
+    
+</script>
+ 
+
+-----------------------------------------------------------------------------------------------------
+ 
+ // HTML内のthumbクラスを持つ複数の画像に対し、クリックするとbigimgというIDをもつセレクタの画像ソースとして代入させる
+ 
+<script>
+		const thumbs = document.querySelectorAll('.thumb'); // セレクタが合致する要素を全て取得
+		thumbs.forEach(function(item, index) { // jsの基本的なforeach文の書き方
+		    item.onclick = function() { // onclickイベントに対して無名関数を当てている
+		        document.getElementById('bigimg').src = this.dataset.image;
+		    }
+		});
+</script>
+
+<script>
+-----------------------------------------------------------------------------------------------------
+// prev, nextボタンを押すと画像が進んだり戻ったりする
+
+const images = ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg'];
+let currentIndex = 0;
+
+function changeImage(num) {
+    if(currentIndex + num >= 0 && currentIndex + num < images.length) { // 現在が0以上かつ画像の枚数未満の場合
+        currentIndex += num; 
+        document.getElementById('main_image').src = images[currentIndex];
+        pageNum();
+    }
+};
+
+function pageNum() {
+    document.getElementById('page').textContent = `${currentIndex + 1}/${images.length}`;
+}
+
+pageNum();
+
+document.getElementById('prev').onclick = function() {
+    changeImage(-1);
+};
+document.getElementById('next').onclick = function() {
+    changeImage(1);
+};
+</script>
+
+<script>
+-----------------------------------------------------------------------------------------------------
+// 画像のプリロード
+
+const images = ['images/image1.jpg', 'images/image2.jpg', 'images/image3.jpg', 'images/image4.jpg', 'images/image5.jpg'];
+images.forEach(function(item, index){
+    preloadImage(item);
+});
+let currentIndex = 0;
+
+function preloadImage(path) {
+    let imgTag = document.createElement('img'); // img要素を生成
+    imgTag.src = path; // img要素のsrc属性に画像のパスを代入 ここで画像のプリロードが行われる。
+};
+</script>
+
+-----------------------------------------------------------------------------------------------------
+// geolocationメソッドで現在位置を非同期で取得する
+
+function success(pos) {
+    const lat = pos.coords.latitude; //緯度
+    const lng = pos.coords.longitude;  //経度
+    const accuracy = pos.coords.accuracy; //精度
+
+    $('#loc').text(`緯度：${lat} 経度：${lng}`);
+    $('#accuracy').text(accuracy);
+}
+
+function fail(error) {
+    alert('位置情報の取得に失敗しました。エラーコード：' + error.code);
+}
+// エラーコードの種類
+// 1. No Permission
+// 2. unexpected error(通信規格がhttpだった等)
+// 3. Timeout
+
+navigator.geolocation.getCurrentPosition(success, fail);
+
+※位置情報の取得は、プライバシーに関わる情報のため、下記いずれかの要件を満たさないと取得できない
+①httpsプロトコルの通信
+②ローカルでプログラムを実行(HTMLをローカルで開く)
+
+-----------------------------------------------------------------------------------------------------
+WebAPIから転記情報を取得する
+
+
+
+## DOM操作基礎
+
+
+
+// ID属性から要素を取得
+document.getElementById('属性名')
+
+// ID属性を持つ要素の内容を上書き
+document.getElementById('属性名').textContent = '上書きする内容'
+
+// 取得した要素の前後、または小要素として、別の要素を挿入する。(adjacent = 隣接する)
+document.getElementById('属性名').insertAdjacentHTML('挿入する場所', '挿入する要素');
+
+-- 挿入する場所の指定
+'beforebegin'
+'afterbegin'
+'beforeend'
+'afterend'
+
+-- 配置関係
+
+// 'beforebegin'
+<ul id="list"> 
+
+  // 'beforeend'
+	<li>デザインカンプ作成</li>
+	// 'afterbegin'
+</ul>
+// 'afterend'
+
+------------------------
+
+// CSSセレクタから要素を選択
+document.querySelector('cssセレクタ名').プロパティ;
+
+// DOM 子要素を削除(非表示)
+document.'要素'.removeChild('子要素');
+
+// カスタムデータ属性　(HTML5から使用可能)
+<img src="thumb-img1.jpg" class="thumb" data-image="img1.jpg">  
+// data-** と記載があるHTMLタグはカスタム属性
+// このタグの値はJSで参照、利用することが可能
+// 元々class属性はスタイルの割当てが目的なので、データの格納にはこちらを使用すること
+https://qiita.com/k152744/items/c96fcf0141798bf48dd7
+
+// 取得した要素.dataset.自分でつけた要素名(**);
+item.onclick=function(){
+    console.log(this.dataset.image); //クリックした要素(this)のdata-image属性を読み取る
+};
+
+// 属性の値を読み取る
+取得した要素.属性
+
+// 属性の値を書き換える
+取得した要素.属性 = 値;
+
+// HTML上に新しい要素を作成する
+document.createElement('要素');
+
+
+
+## イベント処理
+
+
+// 送信ボタン押下時、サーバー送信直前に実行
+取得した要素.onsubmit = function(event) { // onsubmitイベントオブジェクトがeventとして代入
+  処理内容
+};
+
+// フォーム情報から値を取得する方法
+form要素.name属性.value
+
+// タグの基本動作をキャンセル
+イベントオブジェクト.preventDefault()
+
+例: フォーム送信を行わず、onsubmitイベントで値を取得する
+<form action="#" id="form">
+    <input type="text" name="word">
+    <input type="submit" value="検索">
+    <p id="output"></p>        
+</form>
+ <script>
+ document.getElementById('form').onsubmit = function(event) {
+    event.preventDefault();  // formの動作(URL変更による読込)をキャンセル
+		~~後続処理
+
+// n秒後にファンクションを1度だけ実行する
+setTimeout(ファンクション, 待ち時間(1/1000秒))
+
+**ファンクションにかっこ()はつけない。その場で関数が実行されて無限ループする
+	
+	
+// htmlタグに埋め込んだlang属性の値でプルダウンリストの値を変更する
+
+const lang = document.querySelector('html').lang; // querySelector ...cssセレクタの値を取得する
+
+switch(lang) {
+    case 'ja':
+        document.querySelector('option[value="index.html"]').selected = true; // optionの特定の値のselectedプロパティを上書きしている。
+        break;
+    case 'en':
+        document.querySelector('option[value="index-en.html"]').selected = true;
+        break;
+    case 'zh':
+        document.querySelector('option[value="index-zh.html"]').selected = true;
+        break;
+}
+	
+	
+
+------------------------------------------------------------------------
+	
+// クッキーの承認を記録たクッキーを取得する(ライブラリ使用)
+
+<!--commonディレクトリは以下のライブラリを呼び出して、Cookiesオブジェクトを使用-->
+<script src="../../_common/scripts/js.cookie.js"></script>
+<script>
+'use strict';
+
+const agree = Cookies.get('cookie-agree'); // cookieの"cookie-agree"プロパティを取得
+const panel = document.getElementById('privacy-panel'); 
+if(agree === 'yes') {
+    document.body.removeChild(panel); // 承認済みならパネル非表示
+} else {
+    document.getElementById('agreebtn').onclick = function() { // 未承認の場合、承認ボタンを押すと無名関数実行
+        Cookies.set('cookie-agree', 'yes', {expires: 7}); // cookieを付与 (プロパティ、値、有効期限json)
+        document.body.removeChild(panel); // パネル非表示
+    };
+}
+</script>
+
+------------------------------------------------------------------------
+
+// サブメニューの見出しをクリックすると、class属性にhiddenを加えたり外したりする。
+
+<script src="../../_common/scripts/jquery-3.4.1.min.js"></script>
+<script>
+'use strict';
+
+$(document).ready(function() {
+    $('.submenu h3').on('click', function() {
+        $(this).next().toggleClass('hidden');
+    });
+});
+</script>
+
+------------------------------------------------------------------------
+
+// ajaxで空席状況のjsonデータを取得し、混雑しているidを持つ要素にcrowded属性を追加する。
+<script src="../../_common/scripts/jquery-3.4.1.min.js"></script>
+<script>
+'use strict';
+
+$(document).ready(function() {
+    //ファイルの読み込み
+    //※ブラウザ側で、ローカル内のファイルをAjaxで読み込むことができないので、Webサーバーを立ち上げて機能を確認すること
+    $.ajax({url: 'data.json', dataType: 'json'})
+    .done(function(data) {
+        data.forEach(function(item, index) { // パース不要でそのまま展開できる
+            if(item.crowded === 'yes') {
+                const idName = '#' + item.id;
+                $(idName).find('.check').addClass('crowded');
+            }
+        });
+    })
+    .fail(function(){
+        window.alert('読み込みエラー');
+    });
+
+    //クリックされたら空き席状況を表示
+    $('.check').on('click', function() {
+        if($(this).hasClass('crowded')) {
+            $(this).text('残席わずか').addClass('red');
+        } else {
+            $(this).text('お席あります').addClass('green');
+        }
+    });
+});
+
+</script>
+
+------------------------------------------------------------------------
+
+// 外部APIからむこう3日分のJSONデータを取得して画面に表示する
+
+use strict';
+
+// geolocation(JS 組み込み関数)
+navigator.geolocation.getCurrentPosition(success, fail);
+
+// 位置情報読み込めたらajax
+function success(pos) {
+    ajaxRequest(pos.coords.latitude, pos.coords.longitude);
+}
+
+//読み込めなかったらアラート
+function fail(error) {
+    alert('位置情報の取得に失敗しました。エラーコード：' + error.code);
+}
+
+// UTCをミリ秒に
+function utcToJSTime(utcTime) {
+    return utcTime * 1000;
+}
+
+// データ取得
+// API Doc https://openweathermap.org/forecast5
+
+function ajaxRequest(lat, long) {
+    const url = 'https://api.openweathermap.org/data/2.5/forecast'; // API取得用のURL
+    const appId = '62441600a90de34920cd288b4c9ac381'; // 発行してもらったAPIキー
+
+    $.ajax({
+        url: url,
+        data: {
+            appid: appId,
+            lat: lat,
+            lon: long,
+            units: 'metric',
+            lang: 'ja'
+        }
+    })
+    .done(function(data) {
+        // 都市名、国名
+        $('#place').text(data.city.name + ', ' + data.city.country);
+
+        // 天気予報データ
+        data.list.forEach(function(forecast, index) {
+            const dateTime = new Date(utcToJSTime(forecast.dt));
+            const month = dateTime.getMonth() + 1;
+            const date = dateTime.getDate();
+            const hours = dateTime.getHours();
+            const min = String(dateTime.getMinutes()).padStart(2, '0');
+            const temperature = Math.round(forecast.main.temp);
+            const description = forecast.weather[0].description;
+            const iconPath = `images/${forecast.weather[0].icon}.svg`;
+
+            // 現在の天気とそれ以外で出力を変える
+            if(index === 0) {
+                const currentWeather = `
+                <div class="icon"><img src="${iconPath}"></div>
+                <div class="info">
+                    <p>
+                        <span class="description">現在の天気：${description}</span>
+                        <span class="temp">${temperature}</span>°C
+                    </p>
+                </div>`;
+                $('#weather').html(currentWeather);
+            } else {
+                const tableRow = `
+                <tr>
+                    <td class="info">
+                        ${month}/${date} ${hours}:${min}
+                    </td>
+                    <td class="icon"><img src="${iconPath}"></td>
+                    <td><span class="description">${description}</span></td>
+                    <td><span class="temp">${temperature}°C</span></td>
+                </tr>`;
+                $('#forecast').append(tableRow);
+            }
+        });
+    })
+    .fail(function() {
+        console.log('$.ajax failed!');
+    })
+    
+    
+    
+}
+
+⭐️navigator.geolocation.getCurrentPosionメソッドのコールバック関数について
+ドキュメント...https://developer.mozilla.org/ja/docs/Web/API/Geolocation/getCurrentPosition
+
+navigator.geolocation.getCurrentPositionメソッドは、位置情報の取得に成功した場合に第一引数で指定されたコールバック関数を実行し、
+取得に失敗した場合には第二引数で指定されたコールバック関数を実行します。
+
+成功時: 第一引数のコールバック関数は、Positionオブジェクトを引数として受け取ります。このPositionオブジェクトには、
+coordsプロパティ（緯度、経度などの位置情報を含む）と、timestampプロパティ（位置情報が取得された時刻）が含まれます。
+success関数では、pos引数を通じてこのPositionオブジェクトにアクセスし、そのcoordsプロパティから緯度と経度を取得しています
+
+失敗時: 第二引数のコールバック関数は、PositionErrorオブジェクトを引数として受け取ります。このPositionErrorオブジェクトには、
+codeプロパティ（エラーコード）と、messageプロパティ（エラーメッセージ）が含まれます。fail関数では、error引数を通じてこのPositionErrorオブジェクトにアクセスし、
+そのcodeプロパティを使用してエラーコードを表示しています。
+
+
+
+## Tip
+
+
+// tip
+・intと文字列の結合も可能
+console.log(i + '枚');
+
+・浮動小数点以下の計算は誤差が生じるので、計算には整数のみ使用するようにする。
+ 例: 税率計算 
+ 100 * (1 + 0.1) ではなく、 100 * (100 + 10) / 100
+ 
+ ・formでURLを指定しない場合は、慣例的に action="#" と宣言する
+<form action="#" id="form">
+    <input type="submit" value="検索">
+</form>
+
+・Date()オブジェクト
+-- メソッド
+getFullYear()  年を取得
+getMonth()     月を0~11で取得
+getDate()      日付を取得
+getDay()       曜日を0~6で取得(0が日曜日)
+getHours()     時を取得
+getMinutes()   分を取得
+getSeconds()   秒を取得
+
+setFullYear()  年を設定
+setMonth()     月を0〜11で設定
+setDate()      日付を設定
+setDay()       曜日を0~6で設定(0が日曜日)
+setHours()     時を設定
+setMinutes()   分を設定
+setSeconds()   秒を設定
+
+-- 任意の日時で初期化
+new Date(年,月,日,時,分,秒,m秒)
+
+-- 0x分、 0y秒~~といった表示の実装
+String(x).padStart(2、0) 
+これを使用すると、1:2:3→01:02:03　といった表記に変わる
+
+※.padStart(揃える文字数、埋める文字)
+→String型が持つメソッド 文字数が足らない時任意の文字で埋められる
+
+・Mathオブジェクト
+⭐️よく使う-----------------
+Math.random()        0以上1未満の乱数
+Math.round(x)        四捨五入
+
+Math.floor(Math.rundom() * x) + 1   1~xまでの整数の乱数
+--------------------------
+
+Math.PI              円周率を表示
+Math.floor(数値)     小数点以下を切り捨て
+Math.SQRT1_2         1/2の平方根
+Math.SQRT2           2の平方根
+
+Math.abs(x)          絶対値
+Math.atan2(y,x)      座標x,yのx軸からの角度(ラジアン)
+Math.ceil(x)         小数点切り上げ
+Math.cos(x)          コサイン           
+Math.floor(x)        小数点切り捨て
+Math.max(a,b,c...)   最大値を返す
+Math.min(a,b,c...)   最小値を返す
+Math.pow(x,y)        xのy乗
+
+・よくあるエラー集
+Uncaught TypeError: ~~~~ is not a function
+→たいてい~~~部分のスペルミス
+
+
+## jQuery
+
+
+// 基本的な書き方
+
+まず、jQueryのソースを取得する。（jquery.comからDLしてプロジェクト内に配置する）
+※通常、データ圧縮された本番用プログラムを使用
+<script src="../../_common/scripts/jquery-3.4.1.min.js"></script>
+
+// 基本構文
+$(document).ready(function() {
+  ~~~~
+	$('セレクタ').on('イベント名', function(){
+　　　イベントが発生した時の処理
+	})
+  ~~~~
+})
+→まず、document(pageそのもの)をjQueryオブジェクトに変換し、readyメソッド内に処理を書いていく。
+ セレクタをjQueryオブジェクトに変換し、onメソッド内にイベント内容と実行内容を記載する
+
+// イベント名の種類
+'click' クリック
+''
+''
+''
+
+// jQueryセレクタ
+jQuery固有のセレクタも定義されており、そのセレクタと合致する要素を取得する、といった運用が可能
+:even 0からはじまるインデックスで0含む偶数の要素を指定
+:
+:
+
+//　トラバーサル
+$('セレクタ').next().'jQueryメソッド'() // 取得したセレクタの1つ次のセレクタに対し、メソッドを実行する。
+→このように、jQueryは取得した要素の次、親、子要素など、相対的な位置関係から別の要素を取得できる。
+
+// ajax
+$.ajax({url: 'データのURL', dataType: 'json', その他の設定: '設定値', ...})
+.done(function(data){
+ ダウンロードできた時の処理
+})
+.fail(function(){
+ ダウンロードできなかった時の処理
+})
+...ajaxは通常、同一オリジン内でしかデータ送受信ができない。
+
+(APIはどうやってる？API送受信用のバックエンドプログラムを組んでそこ踏んでとってるのかな))
+
+// jsonの書式 → javascriptのオブジェクト書式とほぼ同じで、パースなしで利用可能
+{"id":"js", "crowded":"yes"},
+{"id":"security", "crowded":"no"},
+{"id":"ajax", "crowded":"no"}
+
+jsオブジェクトとの違い...
+①プロパティ名もダブルクォートで囲むこと
+②シングルクォートは利用不可
+
+
+
+## JQueryメソッド一覧
+
+
+
+// コア機能
+$('セレクタ') セレクタにマッチする要素を全て取得する
+$(配列orオブジェクト) 配列のデータやオブジェクトのプロパティを全て取得する
+$.ajax 非同期通信を開始する
+
+// トラバースメソッド
+next(): 取得したセレクタの1つ次のセレクタを取得(親、子関係なく位置関係で参照)
+
+find('セレクタ'): 子孫要素のうち、セレクタにマッチする要素を取得
+
+children('セレクタ'):　子要素を全て取得し、パラメータにセレクタが含まれている要素は、
+　　　　　　　　　　　　セレクタが合致する子要素のみ取得
+
+parent('セレクタ'):　親要素を全て取得し、パラメータにセレクタが含まれている要素は、
+　　　　　　　　　　　セレクタが合致する親要素のみ取得
+
+each(function(){~~}): 取得したすべての要素、配列にforeachで処理を実行させる
+
+siblings(): 兄弟要素をすべて取得する
+
+prev(): すぐ前の兄要素を取得する
+
+eq("int")：選択された要素の中から指定した位置（インデックス値）にある要素を選び出す。
+     インデックスは0から始まるので、先頭の要素の選択には$("selector").eq(0)を使う。
+
+first()、last()：合致した要素のなかから単に最初の要素を返し、lastは最後の要素を返す。
+
+slice(x,y?)：特定のインデックスの範囲にある複数要素を一度に抜き出したいときはslice()を使う。
+             このメソッドは2つの引数を取る。抜き出したい部分の開始インデックスと、
+             その部分の終わりを示す終端インデックス。2つ目の引数は省略でき、
+             省略した場合は最初の引数startよりもインデックスの大きいものがすべて選択される
+            
+filter()：セレクターに合致した要素だけを抜き出すか、あるいは引数としてセットした
+         関数の実行によって要素を抜き出す。次のコードはセレクターを使ったこのメソッドの1例となる。
+         
+         // li要素のうち、even属性(indexが0含む偶数)に該当するもののフォントを太字に設定
+         $("li").filter(":even").css( "font-weight", "bold" );
+
+         // li要素のうち、indexが0含む偶数のもののフォントを太字を設定         
+         $("li").filter(function( index ) {
+				   return index % 2 === 0;
+					})
+					.css( "font-weight", "bold" );
+					
+
+// マニピュレーションメソッド
+addClass('クラス名') 取得した要素にクラスを追加する。
+removeClass('クラス名') 取得した要素からクラスを削除する。
+toggleClass('クラス名') 取得した要素にクラスを追加するor削除する。
+text() テキストファイルを読み取る
+text('書き換えるテキスト') 取得した要素のコンテンツを書き換える
+hasClass('クラス名')  要素が特定のクラスを所持しているか boolで返す
+prepend('要素')      取得した要素に子要素を挿入する。(前側に挿入)
+append('要素')       取得した要素に子要素を挿入する。(後側に挿入)
+
+attr('属性名','値') 要素の属性に値を設定する
+attr('属性名')     要素の属性の値を読み取る
+remove().         要素を削除する
+html('書き換えるHTML') 要素内のコンテンツを引数のHTMLに書き換える
+
+// イベント
+on('イベント',function(){...})  イベントを設定する
+event.preventDefault() イベントの基本動作をキャンセルする(Javascriptメソッド)
+

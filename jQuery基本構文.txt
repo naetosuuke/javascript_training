@@ -1,0 +1,224 @@
+# jQuery基本構文
+
+### 基本構文
+
+$(”セレクタ”).メソッド(”引数”);
+DOMに対し、メソッドでアクションを起こす
+例　$(#target”).hide(); 
+⇨ID(target)を持つDOMを非表示にする
+
+セレクタはCSSと同じ容量で設定/参照する。
+例えば、下記の処理は両方とも同じ結果になる
+—CSS
+div.myClass {
+color: red;
+}
+
+—jQuery
+$(’div.myClass’).css(’color’, ‘red’);
+### メソッドチェーン
+同一のDOMに対し、複数のメソッドを繋げて実行できる
+$(’p’).css(”color”, ”RED”).text(”赤色になりました”)
+
+### イベントハンドラ
+DOMに対し、何かしたタイミングで処理を行う
+$(”要素”).on(”動作1, 動作2…”, function(){
+行いたい処理
+}); 
+
+⇨この処理がコールバック関数
+例 buttonをクリックしたらpを非表示にする
+$(function() {
+  $(”button”).on(”click”, function()) {
+    $(”p”).hide();
+  });
+});
+
+### ユーザー定義関数
+jQueryオブジェクトのメソッドとして関数を追加することができる
+
+例
+$.fn.myCustomMethod = function() {
+  // ‘this’ はjQueryオブジェクトを参照
+  this.css(’color’, ‘red’);
+  return this; // メソッドチェーンを可能にするためjQueryオブジェクトを返す
+};
+
+$(’div’).myCustomMethod();  // 呼出
+
+
+
+## 基本的なイベントハンドラ
+click()	クリック時に実行	$('#btn').click(function() { alert('Clicked!'); });
+dblclick()	ダブルクリック時に実行	$('#btn').dblclick(function() { alert('Double Clicked!'); });
+mouseenter()	マウスが要素に入ったとき	$('#box').mouseenter(function() { $(this).css('background', 'red'); });
+mouseleave()	マウスが要素から出たとき	$('#box').mouseleave(function() { $(this).css('background', ''); });
+mousedown()	マウスボタンを押したとき	$('#box').mousedown(function() { console.log('Mouse Down'); });
+mouseup()	マウスボタンを離したとき	$('#box').mouseup(function() { console.log('Mouse Up'); });
+mousemove()	マウスが動いたとき	$('#box').mousemove(function(event) { console.log('X: ' + event.pageX + ', Y: ' + event.pageY); });
+
+## フォーム関連のイベント
+focus()	要素にフォーカスが当たったとき	$('#input').focus(function() { $(this).css('border', '2px solid blue'); });
+blur()	要素のフォーカスが外れたとき	$('#input').blur(function() { $(this).css('border', ''); });
+change()	入力値が変更されたとき	$('#select').change(function() { alert('Selected: ' + $(this).val()); });
+submit()	フォームが送信されたとき	$('form').submit(function(event) { event.preventDefault(); alert('Form Submitted!'); });
+keydown()	キーが押されたとき	$(document).keydown(function(event) { console.log('Key Pressed: ' + event.key); });
+keyup()	キーが離されたとき	$(document).keyup(function(event) { console.log('Key Released: ' + event.key); });
+
+## その他のイベント
+hover()	マウスが要素に入った/出たとき	$('#box').hover(function() { $(this).css('background', 'red'); }, function() { $(this).css('background', ''); });
+toggle()	クリックごとに表示/非表示を切り替え	$('#btn').click(function() { $('#box').toggle(); });
+on()	動的にイベントをバインド	$(document).on('click', '.dynamic-btn', function() { alert('Dynamic Button Clicked!'); });
+off()	イベントを削除	$('#btn').off('click');
+
+## イベントの伝播制御
+event.preventDefault()	デフォルトの動作をキャンセル	$('a').click(function(event) { event.preventDefault(); alert('リンク無効'); });
+event.stopPropagation()	親要素へのイベント伝播を防ぐ	$('#child').click(function(event) { event.stopPropagation(); alert('Child Clicked'); });
+
+
+## 要素の取得
+$('#id')	IDで要素を取得	$('#myDiv')
+$('.class')	クラスで要素を取得	$('.myClass')
+$('[name="name"]')	name 属性で取得	$('[name="username"]')
+$('[attribute="value"]')	任意の属性で取得	$('[type="checkbox"]')
+$('*')	すべての要素を取得	$('body *')
+$('tag')	タグ名で取得	
+$('p') ページ読み込み時に要素を取得
+$(document).ready()	DOMが読み込まれた時	$(document).ready(function() { console.log('DOM Ready'); });
+$(function() {})	短縮形のDOM準備	$(function() { console.log('Ready!'); });
+$(window).on('load', function() {})	画像やCSSも含めた完全なロード時	$(window).on('load', function() { console.log('Fully Loaded'); });
+
+## フォーム要素の取得（<input> タイプ別）
+$('#text').val()	text の値取得	$('#text').val();
+$('#password').val()	password の値取得	$('#password').val();
+$('#email').val()	email の値取得	$('#email').val();
+$('#number').val()	number の値取得	$('#number').val();
+$('#checkbox').prop('checked')	checkbox の状態取得	$('#checkbox').prop('checked');
+$('input[type="radio"]:checked').val()	radio の選択値取得	$('input[name="gender"]:checked').val();
+$('#select').val()	select の選択値取得	$('#select').val();
+$('#textarea').val()	textarea の値取得	$('#textarea').val();
+
+## 値の変更
+$('#text').val('new value')	text の値を変更	$('#text').val('Hello');
+$('#checkbox').prop('checked', true)	checkbox をチェックする	$('#checkbox').prop('checked', true);
+$('#select').val('option2')	select の選択肢を変更	$('#select').val('option2');
+
+## 要素の操作
+$('#box').text()	テキスト取得	$('#box').text();
+$('#box').text('New Text')	テキスト変更	$('#box').text('Hello World');
+$('#box').html()	HTMLを取得	$('#box').html();
+$('#box').html('<b>Bold</b>')	HTMLを挿入	$('#box').html('<b>Bold</b>');
+$('#box').append('<p>追加</p>')	子要素を追加（後）	$('#box').append('<p>追加</p>');
+$('#box').prepend('<p>追加</p>')	子要素を追加（前）	$('#box').prepend('<p>追加</p>');
+$('#box').remove()	要素を削除	$('#box').remove();
+$('#box').empty()	子要素のみ削除	$('#box').empty();
+
+## CSS & クラス操作
+$('#box').css('color', 'red')	CSSを変更	$('#box').css('color', 'red');
+$('#box').addClass('active')	クラスを追加	$('#box').addClass('active');
+$('#box').removeClass('active')	クラスを削除	$('#box').removeClass('active');
+$('#box').toggleClass('active')	クラスのON/OFF	$('#box').toggleClass('active');
+
+## 表示・非表示
+$('#box').show()	要素を表示	$('#box').show();
+$('#box').hide()	要素を非表示	$('#box').hide();
+$('#box').toggle()	表示/非表示を切り替え	$('#box').toggle();
+$('#box').fadeIn(500)	フェードイン	$('#box').fadeIn(500);
+$('#box').fadeOut(500)	フェードアウト	$('#box').fadeOut(500);
+$('#box').slideDown(500)	スライド表示	$('#box').slideDown(500);
+$('#box').slideUp(500)	スライド非表示	$('#box').slideUp(500);
+
+## 属性の操作
+$('#link').attr('href')	属性を取得	$('#link').attr('href');
+$('#link').attr('href', 'https://example.com')	属性を変更	$('#link').attr('href', 'https://example.com');
+$('#input').prop('disabled', true)	無効化	$('#input').prop('disabled', true);
+$('#input').prop('disabled', false)	有効化	$('#input').prop('disabled', false);
+
+## まとめ
+要素を取得するには $('#id') や $('.class') を使う
+フォーム要素の値取得には .val() を活用
+HTMLを変更するなら .text() や .html()
+クラスやCSS操作には .addClass()、.css()
+表示・非表示には .show(), .hide(), .toggle()
+属性の取得・変更には .attr() や .prop()
+
+
+
+
+
+
+
+あなた:
+ありがとうございます。ではアニメーションや画面の動的制御など、画面実装をリッチに行う制御例のチートシートも出力してください
+ChatGPT:
+jQuery アニメーション & 画面制御 チートシート
+基本的なアニメーション
+
+$('#box').fadeIn(500)	フェードイン（0.5秒）	$('#box').fadeIn(500);
+$('#box').fadeOut(500)	フェードアウト（0.5秒）	$('#box').fadeOut(500);
+$('#box').fadeToggle(500)	フェードのON/OFF切替	$('#box').fadeToggle(500);
+$('#box').fadeTo(500, 0.5)	透明度を50%に変更	$('#box').fadeTo(500, 0.5);
+$('#box').slideDown(500)	スライド表示	$('#box').slideDown(500);
+$('#box').slideUp(500)	スライド非表示	$('#box').slideUp(500);
+$('#box').slideToggle(500)	スライド表示/非表示を切り替え	$('#box').slideToggle(500);
+高度なアニメーション（animate()）
+
+$('#box').animate({ opacity: 0.5 }, 500)	透明度を50%に変更	$('#box').animate({ opacity: 0.5 }, 500);
+$('#box').animate({ width: '200px' }, 500)	幅を200pxに変更	$('#box').animate({ width: '200px' }, 500);
+$('#box').animate({ left: '+=100px' }, 500)	右へ100px移動	$('#box').animate({ left: '+=100px' }, 500);
+$('#box').animate({ top: '-=50px', opacity: 0.7 }, 500)	上へ50px移動しつつ透明度70%	$('#box').animate({ top: '-=50px', opacity: 0.7 }, 500);
+$('#box').animate({ fontSize: '20px' }, 500)	フォントサイズ変更	$('#box').animate({ fontSize: '20px' }, 500);
+$('#box').animate({ width: 'toggle' }, 500)	横幅をトグル（開閉）	$('#box').animate({ width: 'toggle' }, 500);
+連続アニメーション
+
+$('#box').fadeOut(500).fadeIn(500)	フェードアウト→フェードイン	$('#box').fadeOut(500).fadeIn(500);
+$('#box').slideUp(500).slideDown(500)	スライドアップ→スライドダウン	$('#box').slideUp(500).slideDown(500);
+$('#box').animate({ left: '+=100px' }, 500).animate({ left: '-=100px' }, 500)	右へ移動→左へ戻る	$('#box').animate({ left: '+=100px' }, 500).animate({ left: '-=100px' }, 500);
+カスタムアニメーション（コールバック利用）
+
+$('#box').fadeOut(500, function() { alert('アニメーション完了'); })	フェードアウト後にアラート	$('#box').fadeOut(500, function() { alert('完了'); });
+$('#box').slideUp(500, function() { $(this).remove(); })	スライドアップ後に要素削除	$('#box').slideUp(500, function() { $(this).remove(); });
+$('#box').animate({ opacity: 0 }, 500, function() { $(this).hide(); })	透明化後に非表示	$('#box').animate({ opacity: 0 }, 500, function() { $(this).hide(); });
+クラスの動的変更
+
+$('#box').addClass('active')	クラス追加	$('#box').addClass('active');
+$('#box').removeClass('active')	クラス削除	$('#box').removeClass('active');
+$('#box').toggleClass('active')	クラスのON/OFF	$('#box').toggleClass('active');
+イベントを使った動的制御
+
+$('#btn').click(function() { $('#box').fadeToggle(); });	ボタンクリックでフェード表示切替	$('#btn').click(function() { $('#box').fadeToggle(); });
+$('#btn').hover(function() { $('#box').slideDown(); }, function() { $('#box').slideUp(); });	ホバーでスライド表示	$('#btn').hover(function() { $('#box').slideDown(); }, function() { $('#box').slideUp(); });
+$(window).scroll(function() { console.log('スクロール中'); });	スクロール時の処理	$(window).scroll(function() { console.log('スクロール中'); });
+要素のドラッグ & ドロップ（jQuery UIが必要）
+機能	説明	使用例
+$('#box').draggable();	要素をドラッグ可能にする	$('#box').draggable();
+$('#box').droppable({ drop: function() { alert('ドロップされた！'); } });	ドロップエリア設定	$('#box').droppable({ drop: function() { alert('ドロップされた！'); } });
+jQuery UI を利用する場合はCDNを追加:
+
+html
+コピーする
+編集する
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+スクロールアニメーション
+
+$('html, body').animate({ scrollTop: 0 }, 500);	ページトップへスクロール	$('html, body').animate({ scrollTop: 0 }, 500);
+$('html, body').animate({ scrollTop: $('#section').offset().top }, 500);	特定の要素までスクロール	$('html, body').animate({ scrollTop: $('#section').offset().top }, 500);
+その他の便利機能
+機能	説明	使用例
+$('#box').fadeOut(500).delay(1000).fadeIn(500);	1秒待機して再表示	$('#box').fadeOut(500).delay(1000).fadeIn(500);
+$('#box').stop(true, true).fadeOut(500);	アニメーションを即時停止	$('#box').stop(true, true).fadeOut(500);
+$('#box').animate({ left: '+=100px' }, { duration: 500, easing: 'swing' });	イージング適用（jQuery UIが必要）	$('#box').animate({ left: '+=100px' }, { duration: 500, easing: 'swing' });
+まとめ
+アニメーションには fadeIn(), slideUp(), animate() を活用
+イベント（クリック・ホバー）で動的に要素を制御
+スクロールアニメーションやドラッグ＆ドロップでリッチなUI実装
+stop(), delay() を使って動きを最適化
+これでリッチな画面実装も簡単！
+
+
+
+
+
+
+
